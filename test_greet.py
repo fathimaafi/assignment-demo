@@ -9,6 +9,7 @@ class TestGreet(unittest.TestCase):
         self.assertEqual(greet("Alice"), "Hello, Alice!")
 
     def test_empty_string(self):
+        """Tests greeting with an empty string."""
         self.assertEqual(greet(""), "Hello, !")
 
 if __name__ == "__main__":
