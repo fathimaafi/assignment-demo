@@ -29,12 +29,13 @@ This is a simple Python project that provides a greeting functionality and demon
    python -m venv myenv
    myenv\Scripts\activate
    ```
-   
+
    On macOS/Linux:
    ```bash
    python3 -m venv myenv
    source myenv/bin/activate
    ```
+
 
 3. **Install dependencies:**
    ```bash
