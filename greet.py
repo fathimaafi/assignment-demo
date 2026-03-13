@@ -1,7 +1,7 @@
 """Module to provide greeting functionality."""
 
 def greet(name):
-    """Returns a greeting string for the given name."""
+    """Returns a greeting string for the given name as input."""
     return f"Hello, {name}!"
 
 if __name__ == "__main__":

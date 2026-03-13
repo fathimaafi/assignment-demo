@@ -1,3 +1,5 @@
+[![Run Tests](https://github.com/fathimaafi/assignment-demo/actions/workflows/test.yml/badge.svg)](https://github.com/fathimaafi/assignment-demo/actions/workflows/test.yml)
+
 # Greeter Project
 
 This is a simple Python project that provides a greeting functionality and demonstrates basic unit testing and linting practices.
