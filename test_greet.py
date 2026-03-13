@@ -7,6 +7,7 @@ class TestGreet(unittest.TestCase):
     def test_valid_name(self):
         """Tests greeting with a valid name."""
         self.assertEqual(greet("Alice"), "Hello, Alice!")
+        self.assertEqual(greet("Alice"), "Hello, Alice!")
         
     def test_empty_string(self):
         """Tests greeting with an empty string."""
