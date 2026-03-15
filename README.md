@@ -75,3 +75,15 @@ myenv\Scripts\pylint.exe greet.py test_greet.py
 
 ## CI/CD Pipeline
 The project is configured with a GitHub Action that automatically runs `pylint` and then executes the unit tests on every push to the `main` branch. This ensures that all code meets the required quality standards and passes all tests before being integrated.
+
+## Triggering the Workflow Manually
+
+In addition to automatic runs on push, the workflow can be triggered manually using `workflow_dispatch`:
+
+1. Go to your repository on [GitHub](https://github.com).
+2. Click the **Actions** tab.
+3. Select **Run Tests** from the left sidebar.
+4. Click the **Run workflow** dropdown on the right.
+5. Choose the branch (e.g., `main`) and click **Run workflow**.
+
+The workflow will start within a few seconds and you can monitor its progress in the Actions tab.
