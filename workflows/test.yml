@@ -32,14 +32,23 @@ jobs:
         id: pylint
         continue-on-error: true
         run: |
-          pylint greet.py test_greet.py
+          pylint greet.py test_greet.py 2>&1 | tee pylint-results.txt
 
       - name: Run tests
         id: tests
         continue-on-error: true
         run: |
-          python -m pytest test_greet.py -v > test-results.txt 2>&1
+          python -m pytest test_greet.py -v 2>&1 | tee test-results.txt
           cat test-results.txt
+
+      - name: Ensure test results file exists
+        if: always()
+        run: |
+          touch test-results.txt
+          if [ -f pylint-results.txt ]; then
+            echo "=== PYLINT RESULTS ===" >> test-results.txt
+            cat pylint-results.txt >> test-results.txt
+          fi
 
       - name: Upload test results
         if: always()
