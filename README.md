@@ -87,3 +87,35 @@ In addition to automatic runs on push, the workflow can be triggered manually us
 5. Choose the branch (e.g., `main`) and click **Run workflow**.
 
 The workflow will start within a few seconds and you can monitor its progress in the Actions tab.
+
+## Accessing Test Artifacts
+
+After each workflow run, the verbose test results are saved and uploaded as a downloadable artifact named `test-results`.
+
+### How to Access
+
+1. Go to your repository on [GitHub](https://github.com).
+2. Click the **Actions** tab.
+3. Select the workflow run you want to inspect.
+4. Scroll down to the **Artifacts** section at the bottom of the run summary page.
+5. Click **test-results** to download the zip file.
+6. Extract the zip and open `test-results.txt` to view the full verbose test output.
+
+### What the Artifact Contains
+
+- Each test method name with its pass (`ok`) or fail (`FAIL`) status
+- Total number of tests run, failures, and errors
+- Full traceback for any failed tests
+
+Example output:
+```
+test_empty_string (test_greet.TestGreet) ... ok
+test_valid_name (test_greet.TestGreet) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK
+```
+
+> Note: Artifacts are available for 90 days by default after which GitHub automatically deletes them.
