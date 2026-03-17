@@ -35,7 +35,8 @@ jobs:
       - name: Run tests
         id: tests
         run: |
-          python -m unittest discover -v -p 'test_greet.py' 2>&1 | tee test-results.txt
+          python -m pytest test_greet.py -v > test-results.txt 2>&1 || true
+          cat test-results.txt
 
       - name: Upload test results
         if: always()

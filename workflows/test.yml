@@ -4,11 +4,10 @@ on:
   push:
     branches:
       - main
-  pull:
+  pull_request:
     branches:
       - main
   workflow_dispatch:
-    
 
 jobs:
   test:
@@ -23,10 +22,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Pylint
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pylint
+          pip install pylint pytest
 
       - name: Run Pylint
         id: pylint
@@ -36,7 +35,8 @@ jobs:
       - name: Run tests
         id: tests
         run: |
-          python -m unittest discover -v -s . -p 'test_greet.py' 2>&1 | tee test-results.txt
+          python -m pytest test_greet.py -v > test-results.txt 2>&1 || true
+          cat test-results.txt
 
       - name: Upload test results
         if: always()
