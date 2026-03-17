@@ -29,13 +29,11 @@ jobs:
 
       - name: Run Pylint
         id: pylint
-        working-directory: greeter
         run: |
           pylint greet.py test_greet.py
 
       - name: Run tests
         id: tests
-        working-directory: greeter
         run: |
           python -m unittest discover -v -p 'test_greet.py' 2>&1 | tee test-results.txt
 
@@ -44,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: greeter/test-results.txt
+          path: test-results.txt
 
       - name: Send failure email
         if: failure()
