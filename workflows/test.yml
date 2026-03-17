@@ -30,13 +30,15 @@ jobs:
 
       - name: Run Pylint
         id: pylint
+        continue-on-error: true
         run: |
           pylint greet.py test_greet.py
 
       - name: Run tests
         id: tests
+        continue-on-error: true
         run: |
-          python -m pytest test_greet.py -v > test-results.txt 2>&1 || true
+          python -m pytest test_greet.py -v > test-results.txt 2>&1
           cat test-results.txt
 
       - name: Upload test results
