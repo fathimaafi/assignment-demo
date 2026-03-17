@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
   test:
@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Pylint
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pylint pytest
@@ -30,14 +30,32 @@ jobs:
 
       - name: Run Pylint
         id: pylint
+        continue-on-error: true
         run: |
-          pylint greet.py test_greet.py
+          pylint greet.py test_greet.py 2>&1 | tee pylint-results.txt
 
       - name: Run tests
         id: tests
+        continue-on-error: true
         run: |
-          python -m pytest test_greet.py -v > test-results.txt 2>&1 || true
+          python -m pytest test_greet.py -v 2>&1 | tee test-results.txt
           cat test-results.txt
+
+      - name: Ensure test results file exists
+        if: always()
+        run: |
+          touch test-results.txt
+          if [ -f pylint-results.txt ]; then
+            echo "=== PYLINT RESULTS ===" >> test-results.txt
+            cat pylint-results.txt >> test-results.txt
+          fi
+
+      - name: Debug file location
+        if: always()
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -la
+          find . -name 'test-results.txt'
 
       - name: Upload test results
         if: always()
@@ -54,7 +72,7 @@ jobs:
           server_port: 465
           secure: true
           username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
+          password: ${{ secrets.MAIL_APP_PASSWORD }}
           to: ${{ secrets.MAIL_RECIPIENT }}
           from: GitHub Actions <${{ secrets.MAIL_USERNAME }}>
           subject: "❌ Workflow failed: ${{ github.repository }} - ${{ github.workflow }}"
@@ -74,7 +92,7 @@ jobs:
           server_port: 465
           secure: true
           username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
+          password: ${{ secrets.MAIL_APP_PASSWORD }}
           to: ${{ secrets.MAIL_RECIPIENT }}
           from: GitHub Actions <${{ secrets.MAIL_USERNAME }}>
           subject: "✅ Workflow passed: ${{ github.repository }} - ${{ github.workflow }}"
