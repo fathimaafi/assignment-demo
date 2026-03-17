@@ -35,7 +35,14 @@ jobs:
       - name: Run tests
         id: tests
         run: |
-          python -m unittest discover -p 'test_greet.py'
+          python -m unittest discover -v -p 'test_greet.py' 2>&1 | tee test-results.txt
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results.txt
 
       - name: Send failure email
         if: failure()
